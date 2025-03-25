@@ -1,6 +1,7 @@
 -- CREATE DATABASE MeepleMatch;
 
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE
+EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE role
 (
@@ -14,15 +15,16 @@ VALUES ('user'),
 
 CREATE TABLE "user"
 (
-    id_user    SERIAL PRIMARY KEY,
-    uuid       UUID      DEFAULT gen_random_uuid() NOT NULL UNIQUE,
-    username   VARCHAR(50)                         NOT NULL UNIQUE,
-    email      VARCHAR(100)                        NOT NULL UNIQUE,
-    password   VARCHAR(255)                        NOT NULL,
-    role_id    INT                                 NOT NULL REFERENCES role (id_role),
-    is_banned  BOOLEAN   DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    id_user         SERIAL PRIMARY KEY,
+    uuid            UUID                                            DEFAULT gen_random_uuid() NOT NULL UNIQUE,
+    username        VARCHAR(50)  NOT NULL UNIQUE,
+    email           VARCHAR(100) NOT NULL UNIQUE,
+    hashed_password BYTEA        NOT NULL,
+    salt            BYTEA        NOT NULL,
+    role_id         INT          NOT NULL REFERENCES role (id_role) DEFAULT 1,
+    is_banned       BOOLEAN                                         DEFAULT FALSE,
+    created_at      TIMESTAMP                                       DEFAULT CURRENT_TIMESTAMP,
+    updated_at      TIMESTAMP                                       DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE event

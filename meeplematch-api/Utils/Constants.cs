@@ -10,8 +10,8 @@ public static class Constants
     public static readonly string JwtEncryptionKey =
         EnvironmentUtils.Instance.GetEnvironmentVariable("JWT_ENCRYPTION_KEY");
 
-    public static readonly string PsqlDocker =
-        EnvironmentUtils.Instance.GetEnvironmentVariable("PSQL_DOCKER");
+    public static readonly string PsqlConnectionString =
+        EnvironmentUtils.Instance.GetEnvironmentVariable("PSQL_CONNECTION_STRING");
     
     // JWT
     public static readonly string SecurityAlgorithm = SecurityAlgorithms.HmacSha256;

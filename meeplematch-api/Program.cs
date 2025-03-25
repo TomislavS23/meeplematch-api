@@ -76,7 +76,7 @@ public class Program
         
         // Change to any other constant for your convinience
         builder.Services.AddDbContext<MeepleMatchContext>(
-            options => options.UseNpgsql(Constants.PsqlDocker));
+            options => options.UseNpgsql(Constants.PsqlConnectionString));
         
         var app = builder.Build();
 

@@ -23,24 +23,24 @@ CREATE TABLE "user"
     salt            BYTEA        NOT NULL,
     role_id         INT          NOT NULL REFERENCES role (id_role) DEFAULT 1,
     is_banned       BOOLEAN                                         DEFAULT FALSE,
-    created_at      TIMESTAMP                                       DEFAULT CURRENT_TIMESTAMP,
-    updated_at      TIMESTAMP                                       DEFAULT CURRENT_TIMESTAMP
+    created_at      TIMESTAMP WITH TIME ZONE                        DEFAULT CURRENT_TIMESTAMP,
+    updated_at      TIMESTAMP WITH TIME ZONE                        DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE event
 (
     id_event         SERIAL PRIMARY KEY,
-    uuid             UUID      DEFAULT gen_random_uuid() UNIQUE,
+    uuid             UUID                     DEFAULT gen_random_uuid() UNIQUE,
     name             VARCHAR(100) NOT NULL,
     type             VARCHAR(50)  NOT NULL,
     game             VARCHAR(100) NOT NULL,
     location         VARCHAR(255) NOT NULL,
     event_date       TIMESTAMP    NOT NULL,
     capacity         INT,
-    min_participants INT       DEFAULT 2,
+    min_participants INT                      DEFAULT 2,
     created_by       INT          NOT NULL REFERENCES "user" (id_user),
-    created_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at       TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at       TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE event_participant
@@ -48,7 +48,7 @@ CREATE TABLE event_participant
     id_event_participant SERIAL PRIMARY KEY,
     id_event             INT NOT NULL REFERENCES event (id_event),
     id_user              INT NOT NULL REFERENCES "user" (id_user),
-    joined_at            TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    joined_at            TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     UNIQUE (id_event, id_user)
 );
 
@@ -58,8 +58,8 @@ CREATE TABLE event_comment
     event_id         INT  NOT NULL REFERENCES event (id_event),
     user_id          INT  NOT NULL REFERENCES "user" (id_user),
     comment          TEXT NOT NULL,
-    created_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at       TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at       TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE event_rating
@@ -68,7 +68,7 @@ CREATE TABLE event_rating
     event_id        INT NOT NULL REFERENCES event (id_event) ON DELETE CASCADE,
     user_id         INT NOT NULL REFERENCES "user" (id_user) ON DELETE CASCADE,
     rating          INT NOT NULL CHECK (rating >= 1 AND rating <= 5),
-    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at      TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     UNIQUE (event_id, user_id)
 );
 
@@ -85,7 +85,7 @@ CREATE TABLE report
     event_id    INT REFERENCES event (id_event),
     reason      TEXT NOT NULL,
     status      INT  NOT NULL REFERENCES report_status (id_report_status),
-    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at  TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE notification
@@ -93,8 +93,8 @@ CREATE TABLE notification
     id_notification SERIAL PRIMARY KEY,
     user_id         INT  NOT NULL REFERENCES "user" (id_user),
     message         TEXT NOT NULL,
-    is_read         BOOLEAN   DEFAULT FALSE,
-    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    is_read         BOOLEAN                  DEFAULT FALSE,
+    created_at      TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE global_message
@@ -102,7 +102,7 @@ CREATE TABLE global_message
     id_global_message SERIAL PRIMARY KEY,
     message           TEXT NOT NULL,
     created_by        INT  NOT NULL REFERENCES "user" (id_user),
-    created_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at        TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE telemetry
@@ -111,7 +111,7 @@ CREATE TABLE telemetry
     user_id      INT REFERENCES "user" (id_user) ON DELETE CASCADE,
     event_type   VARCHAR(100) NOT NULL,
     event_data   JSONB,
-    created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at   TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE subscription_plan
@@ -120,17 +120,17 @@ CREATE TABLE subscription_plan
     name                 VARCHAR(100)   NOT NULL,
     price                NUMERIC(10, 2) NOT NULL,
     duration             INT            NOT NULL, -- duration in days
-    created_at           TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at           TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE user_subscription
 (
     id_user_subscription SERIAL PRIMARY KEY,
-    user_id              INT       NOT NULL REFERENCES "user" (id_user),
-    subscription_plan_id INT       NOT NULL REFERENCES subscription_plan (id_subscription_plan),
-    start_date           TIMESTAMP NOT NULL,
-    end_date             TIMESTAMP NOT NULL,
-    created_at           TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    user_id              INT                      NOT NULL REFERENCES "user" (id_user),
+    subscription_plan_id INT                      NOT NULL REFERENCES subscription_plan (id_subscription_plan),
+    start_date           TIMESTAMP WITH TIME ZONE NOT NULL,
+    end_date             TIMESTAMP WITH TIME ZONE NOT NULL,
+    created_at           TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Indexes for optimization

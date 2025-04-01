@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace meeplematch_api.Controller;
 
 [ApiController]
-[Route("/api/user-management/user")]
+[Route("/api/meeplematch/user")]
 public class UserController : Microsoft.AspNetCore.Mvc.Controller
 {
     private readonly IUserRepository _userRepository;

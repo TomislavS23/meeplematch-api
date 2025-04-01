@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace meeplematch_api.Controller;
 
 [ApiController]
-[Route("api/role-management/role")]
+[Route("api/meeplematch/role")]
 public class RoleController : Microsoft.AspNetCore.Mvc.Controller
 {
     private readonly IRoleRepository _roleRepository;

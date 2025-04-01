@@ -9,6 +9,7 @@ public partial class MeepleMatchContext : DbContext
     public MeepleMatchContext(DbContextOptions<MeepleMatchContext> options)
         : base(options)
     {
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }
 
     public virtual DbSet<Event> Events { get; set; }
@@ -59,7 +60,6 @@ public partial class MeepleMatchContext : DbContext
             entity.Property(e => e.Capacity).HasColumnName("capacity");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
                 .HasColumnName("created_at");
             entity.Property(e => e.CreatedBy).HasColumnName("created_by");
             entity.Property(e => e.EventDate)
@@ -82,7 +82,6 @@ public partial class MeepleMatchContext : DbContext
                 .HasColumnName("type");
             entity.Property(e => e.UpdatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
                 .HasColumnName("updated_at");
             entity.Property(e => e.Uuid)
                 .HasDefaultValueSql("gen_random_uuid()")
@@ -106,12 +105,10 @@ public partial class MeepleMatchContext : DbContext
             entity.Property(e => e.Comment).HasColumnName("comment");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
                 .HasColumnName("created_at");
             entity.Property(e => e.EventId).HasColumnName("event_id");
             entity.Property(e => e.UpdatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
                 .HasColumnName("updated_at");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
@@ -143,7 +140,6 @@ public partial class MeepleMatchContext : DbContext
             entity.Property(e => e.IdUser).HasColumnName("id_user");
             entity.Property(e => e.JoinedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
                 .HasColumnName("joined_at");
 
             entity.HasOne(d => d.IdEventNavigation).WithMany(p => p.EventParticipants)
@@ -170,7 +166,6 @@ public partial class MeepleMatchContext : DbContext
             entity.Property(e => e.IdEventRating).HasColumnName("id_event_rating");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
                 .HasColumnName("created_at");
             entity.Property(e => e.EventId).HasColumnName("event_id");
             entity.Property(e => e.Rating).HasColumnName("rating");
@@ -194,7 +189,6 @@ public partial class MeepleMatchContext : DbContext
             entity.Property(e => e.IdGlobalMessage).HasColumnName("id_global_message");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
                 .HasColumnName("created_at");
             entity.Property(e => e.CreatedBy).HasColumnName("created_by");
             entity.Property(e => e.Message).HasColumnName("message");
@@ -216,7 +210,6 @@ public partial class MeepleMatchContext : DbContext
             entity.Property(e => e.IdNotification).HasColumnName("id_notification");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
                 .HasColumnName("created_at");
             entity.Property(e => e.IsRead)
                 .HasDefaultValue(false)
@@ -243,7 +236,6 @@ public partial class MeepleMatchContext : DbContext
             entity.Property(e => e.IdReport).HasColumnName("id_report");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
                 .HasColumnName("created_at");
             entity.Property(e => e.EventId).HasColumnName("event_id");
             entity.Property(e => e.Reason).HasColumnName("reason");
@@ -302,7 +294,6 @@ public partial class MeepleMatchContext : DbContext
             entity.Property(e => e.IdSubscriptionPlan).HasColumnName("id_subscription_plan");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
                 .HasColumnName("created_at");
             entity.Property(e => e.Duration).HasColumnName("duration");
             entity.Property(e => e.Name)
@@ -324,7 +315,6 @@ public partial class MeepleMatchContext : DbContext
             entity.Property(e => e.IdTelemetry).HasColumnName("id_telemetry");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
                 .HasColumnName("created_at");
             entity.Property(e => e.EventData)
                 .HasColumnType("jsonb")
@@ -361,7 +351,6 @@ public partial class MeepleMatchContext : DbContext
             entity.Property(e => e.IdUser).HasColumnName("id_user");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
                 .HasColumnName("created_at");
             entity.Property(e => e.Email)
                 .HasMaxLength(100)
@@ -376,7 +365,6 @@ public partial class MeepleMatchContext : DbContext
             entity.Property(e => e.Salt).HasColumnName("salt");
             entity.Property(e => e.UpdatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
                 .HasColumnName("updated_at");
             entity.Property(e => e.Username)
                 .HasMaxLength(50)
@@ -402,14 +390,9 @@ public partial class MeepleMatchContext : DbContext
             entity.Property(e => e.IdUserSubscription).HasColumnName("id_user_subscription");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp without time zone")
                 .HasColumnName("created_at");
-            entity.Property(e => e.EndDate)
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("end_date");
-            entity.Property(e => e.StartDate)
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("start_date");
+            entity.Property(e => e.EndDate).HasColumnName("end_date");
+            entity.Property(e => e.StartDate).HasColumnName("start_date");
             entity.Property(e => e.SubscriptionPlanId).HasColumnName("subscription_plan_id");
             entity.Property(e => e.UserId).HasColumnName("user_id");
 

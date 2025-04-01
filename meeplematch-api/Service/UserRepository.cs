@@ -28,7 +28,11 @@ public class UserRepository : IUserRepository
     public void UpdateUser(UserDTO user, int id)
     {
         var entity = _context.Users.FirstOrDefault(u => u.IdUser == id);
-        _mapper.Map(user, entity);
+        entity.Username = user.Username;
+        entity.Email = user.Email;
+        entity.RoleId = user.RoleId;
+        entity.IsBanned = user.IsBanned;
+        entity.UpdatedAt = user.UpdatedAt;
         _context.SaveChanges();
     }
 

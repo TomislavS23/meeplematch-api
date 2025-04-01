@@ -11,9 +11,12 @@ public class MappingProfile : Profile
         CreateMap<Role, RoleDTO>();
         CreateMap<RoleDTO, Role>();
 
-        CreateMap<User, UserDTO>().ForMember(x => x.IdUser, opt => opt.Ignore());
-        CreateMap<UserDTO, User>().ForMember(x => x.IdUser, opt => opt.Ignore());
+        CreateMap<User, UserDTO>();
+        CreateMap<UserDTO, User>();
         CreateMap<RegisterDTO, User>();
         CreateMap<User, RegisterDTO>();
+
+        CreateMap<Event, EventDTO>();
+        CreateMap<EventDTO, Event>();
     }
 }

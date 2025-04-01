@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace meeplematch_api.Controller;
 
 [ApiController]
-[Route("api/auth/")]
+[Route("api/meeplematch/auth/")]
 public class AuthController : Microsoft.AspNetCore.Mvc.Controller
 {
     private readonly IAuthRepository _authRepository;

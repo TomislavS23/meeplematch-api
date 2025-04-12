@@ -45,6 +45,7 @@ public class EventRepository : IEventRepository
         entity.Capacity = e.Capacity;
         entity.MinParticipants = e.MinParticipants;
         entity.UpdatedAt = e.UpdatedAt;
+        entity.ImagePath = e.ImagePath;
         _context.SaveChanges();
     }
 

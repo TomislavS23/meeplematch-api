@@ -6,10 +6,13 @@ namespace meeplematch_api.Model;
 
 public partial class MeepleMatchContext : DbContext
 {
+    public MeepleMatchContext()
+    {
+    }
+
     public MeepleMatchContext(DbContextOptions<MeepleMatchContext> options)
         : base(options)
     {
-        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }
 
     public virtual DbSet<Event> Events { get; set; }
@@ -62,12 +65,14 @@ public partial class MeepleMatchContext : DbContext
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnName("created_at");
             entity.Property(e => e.CreatedBy).HasColumnName("created_by");
+            entity.Property(e => e.Description).HasColumnName("description");
             entity.Property(e => e.EventDate)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("event_date");
             entity.Property(e => e.Game)
                 .HasMaxLength(100)
                 .HasColumnName("game");
+            entity.Property(e => e.ImagePath).HasColumnName("image_path");
             entity.Property(e => e.Location)
                 .HasMaxLength(255)
                 .HasColumnName("location");

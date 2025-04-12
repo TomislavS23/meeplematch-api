@@ -29,6 +29,10 @@ public partial class Event
 
     public DateTime? UpdatedAt { get; set; }
 
+    public string? Description { get; set; }
+
+    public string? ImagePath { get; set; }
+
     public virtual User CreatedByNavigation { get; set; } = null!;
 
     public virtual ICollection<EventComment> EventComments { get; set; } = new List<EventComment>();

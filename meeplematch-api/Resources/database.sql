@@ -150,6 +150,9 @@ CREATE INDEX idx_notification_user ON notification (user_id);
 CREATE INDEX idx_telemetry_user ON telemetry (user_id);
 CREATE INDEX idx_user_subscription_user ON user_subscription (user_id);
 
+ALTER TABLE public.event
+ADD COLUMN description TEXT,
+ADD COLUMN image_path TEXT;
 
 /*
 

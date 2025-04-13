@@ -33,6 +33,8 @@ CREATE TABLE event
     uuid             UUID                     DEFAULT gen_random_uuid() UNIQUE,
     name             VARCHAR(100) NOT NULL,
     type             VARCHAR(50)  NOT NULL,
+    description      TEXT         NOT NULL,
+    image_path       TEXT         NOT NULL,
     game             VARCHAR(100) NOT NULL,
     location         VARCHAR(255) NOT NULL,
     event_date       TIMESTAMP    NOT NULL,
@@ -149,10 +151,6 @@ CREATE INDEX idx_report_reason ON report (reason);
 CREATE INDEX idx_notification_user ON notification (user_id);
 CREATE INDEX idx_telemetry_user ON telemetry (user_id);
 CREATE INDEX idx_user_subscription_user ON user_subscription (user_id);
-
-ALTER TABLE public.event
-ADD COLUMN description TEXT,
-ADD COLUMN image_path TEXT;
 
 /*
 

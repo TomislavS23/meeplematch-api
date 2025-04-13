@@ -1,3 +1,4 @@
+using AutoMapper;
 using meeplematch_api.DTO;
 using meeplematch_api.Repository;
 using Microsoft.AspNetCore.Authorization;
@@ -10,10 +11,12 @@ namespace meeplematch_api.Controller;
 public class UserController : Microsoft.AspNetCore.Mvc.Controller
 {
     private readonly IUserRepository _userRepository;
+    private readonly IMapper _mapper;
 
-    public UserController(IUserRepository userRepository)
+    public UserController(IUserRepository userRepository, IMapper mapper)
     {
         _userRepository = userRepository;
+        _mapper = mapper;
     }
 
     [HttpGet, Authorize]
@@ -37,6 +40,24 @@ public class UserController : Microsoft.AspNetCore.Mvc.Controller
         {
             var users = _userRepository.GetUsers();
             return Ok(users);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+
+    [HttpGet("public/{id:int}")]
+    public IActionResult GetPublicUser(int id)
+    {
+        try
+        {
+            var user = _userRepository.GetUser(id);
+            if (user == null) return NotFound();
+
+            var publicDto = _mapper.Map<PublicUserDTO>(user);
+
+            return Ok(publicDto);
         }
         catch (Exception e)
         {

@@ -29,6 +29,10 @@ public class Program
         builder.Services.AddScoped<IUserRepository, UserRepository>();
         builder.Services.AddScoped<IAuthRepository, AuthRepository>();
         builder.Services.AddScoped<IEventRepository, EventRepository>();
+        builder.Services.AddScoped<IEventCommentRepository, EventCommentRepository>();
+        builder.Services.AddScoped<IEventParticipantRepository, EventParticipantRepository>();
+        builder.Services.AddScoped<IReportRepository, ReportRepository>();
+        builder.Services.AddScoped<IReportStatusRepository, ReportStatusRepository>();
         
         // AutoMapper support
         builder.Services.AddAutoMapper(typeof(MappingProfile));

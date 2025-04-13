@@ -6,10 +6,6 @@ namespace meeplematch_api.Model;
 
 public partial class MeepleMatchContext : DbContext
 {
-    public MeepleMatchContext()
-    {
-    }
-
     public MeepleMatchContext(DbContextOptions<MeepleMatchContext> options)
         : base(options)
     {

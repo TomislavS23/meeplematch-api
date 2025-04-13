@@ -13,6 +13,10 @@ public partial class Event
 
     public string Type { get; set; } = null!;
 
+    public string Description { get; set; } = null!;
+
+    public string ImagePath { get; set; } = null!;
+
     public string Game { get; set; } = null!;
 
     public string Location { get; set; } = null!;
@@ -28,10 +32,6 @@ public partial class Event
     public DateTime? CreatedAt { get; set; }
 
     public DateTime? UpdatedAt { get; set; }
-
-    public string? Description { get; set; }
-
-    public string? ImagePath { get; set; }
 
     public virtual User CreatedByNavigation { get; set; } = null!;
 

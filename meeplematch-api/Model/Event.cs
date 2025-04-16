@@ -15,7 +15,7 @@ public partial class Event
 
     public string Description { get; set; } = null!;
 
-    public string ImagePath { get; set; } = null!;
+    public string? ImagePath { get; set; } = null!;
 
     public string Game { get; set; } = null!;
 

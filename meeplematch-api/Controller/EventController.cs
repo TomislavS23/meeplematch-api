@@ -55,7 +55,7 @@ public class EventController : ControllerBase
         }
     }
 
-    [HttpPut]
+    [HttpPut("{id:int}")]
     public IActionResult Update([FromBody] EventDTO dto, int id)
     {
         try

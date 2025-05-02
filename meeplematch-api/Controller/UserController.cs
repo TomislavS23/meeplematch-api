@@ -112,4 +112,19 @@ public class UserController : Microsoft.AspNetCore.Mvc.Controller
             return StatusCode(500, e.Message);
         }
     }
+
+    [HttpPost, Authorize(Roles = "admin")]
+    public IActionResult CreateUser([FromBody] CreateUserDTO newUser)
+    {
+        try
+        {
+            _userRepository.CreateUser(newUser);
+            return StatusCode(201);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+
 }

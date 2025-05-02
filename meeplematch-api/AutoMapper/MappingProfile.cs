@@ -20,6 +20,7 @@ public class MappingProfile : Profile
         CreateMap<EventDTO, Event>();
 
         CreateMap<User, PublicUserDTO>().ReverseMap();
+        CreateMap<User, CreateUserDTO>().ReverseMap();
         CreateMap<UserDTO, PublicUserDTO>();
 
         CreateMap<EventParticipant, EventParticipantDTO>();

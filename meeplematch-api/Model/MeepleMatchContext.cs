@@ -6,6 +6,10 @@ namespace meeplematch_api.Model;
 
 public partial class MeepleMatchContext : DbContext
 {
+    public MeepleMatchContext()
+    {
+    }
+
     public MeepleMatchContext(DbContextOptions<MeepleMatchContext> options)
         : base(options)
     {
@@ -36,7 +40,6 @@ public partial class MeepleMatchContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<UserSubscription> UserSubscriptions { get; set; }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasPostgresExtension("uuid-ossp");
@@ -356,10 +359,18 @@ public partial class MeepleMatchContext : DbContext
             entity.Property(e => e.Email)
                 .HasMaxLength(100)
                 .HasColumnName("email");
+            entity.Property(e => e.FirstName)
+                .HasMaxLength(50)
+                .HasColumnName("first_name");
             entity.Property(e => e.HashedPassword).HasColumnName("hashed_password");
+            entity.Property(e => e.ImagePath).HasColumnName("image_path");
             entity.Property(e => e.IsBanned)
                 .HasDefaultValue(false)
                 .HasColumnName("is_banned");
+            entity.Property(e => e.IsMale).HasColumnName("is_male");
+            entity.Property(e => e.LastName)
+                .HasMaxLength(50)
+                .HasColumnName("last_name");
             entity.Property(e => e.RoleId)
                 .HasDefaultValue(1)
                 .HasColumnName("role_id");

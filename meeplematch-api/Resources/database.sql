@@ -25,7 +25,12 @@ CREATE TABLE "user"
     role_id         INT          NOT NULL REFERENCES role (id_role) DEFAULT 1,
     is_banned       BOOLEAN                                         DEFAULT FALSE,
     created_at      TIMESTAMP WITH TIME ZONE                        DEFAULT CURRENT_TIMESTAMP,
-    updated_at      TIMESTAMP WITH TIME ZONE                        DEFAULT CURRENT_TIMESTAMP
+    updated_at      TIMESTAMP WITH TIME ZONE                        DEFAULT CURRENT_TIMESTAMP,
+    first_name         VARCHAR(50),
+    last_name          VARCHAR(50),
+    image_path         TEXT,
+    location           VARCHAR(100),
+    is_male            BOOLEAN
 );
 
 CREATE TABLE event

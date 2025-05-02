@@ -17,8 +17,19 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        
-         // Add services to the container.
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowFrontend", policy =>
+            {
+                policy
+                    .WithOrigins("http://localhost:5071") 
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
+        });
+        // Add services to the container.
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
@@ -94,6 +105,8 @@ public class Program
             app.UseSwaggerUI(c=> 
                 c.ConfigObject.AdditionalItems.Add("persistAuthorization","true"));
         }
+
+        app.UseCors("AllowFrontend");
 
         app.UseAuthentication();
         app.UseAuthorization();

@@ -19,6 +19,7 @@ public class UserController : Microsoft.AspNetCore.Mvc.Controller
         _mapper = mapper;
     }
 
+    //[HttpGet, Authorize(Roles = "admin")]
     [HttpGet, Authorize]
     public IActionResult GetUsers()
     {
@@ -33,13 +34,14 @@ public class UserController : Microsoft.AspNetCore.Mvc.Controller
         }
     }
 
+    //[HttpGet("{id:int}"), Authorize(Roles = "admin")]
     [HttpGet("{id:int}"), Authorize]
     public IActionResult GetUser(int id)
     {
         try
         {
-            var users = _userRepository.GetUsers();
-            return Ok(users);
+            var user = _userRepository.GetUser(id);
+            return Ok(user);
         }
         catch (Exception e)
         {
@@ -65,9 +67,27 @@ public class UserController : Microsoft.AspNetCore.Mvc.Controller
         }
     }
 
-    [HttpPut("{id:int}"), Authorize]
-    public IActionResult UpdateUser([FromBody] UserDTO user, int id)
+    [HttpGet("public/{name}")]
+    public IActionResult GetPublicUserByName(string name)
     {
+        try
+        {
+            var user = _userRepository.GetUsers().FirstOrDefault(u => u.Username.Equals(name));
+            if (user == null) return NotFound();
+
+            var publicDto = _mapper.Map<PublicUserDTO>(user);
+
+            return Ok(publicDto);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+
+    [HttpPut("{id:int}"), Authorize(Roles = "admin")]
+    public IActionResult UpdateUser([FromBody] CreateUserDTO user, int id)
+        {
         try
         {
             _userRepository.UpdateUser(user, id);

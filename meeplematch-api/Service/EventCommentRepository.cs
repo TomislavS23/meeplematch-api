@@ -2,6 +2,7 @@ using AutoMapper;
 using meeplematch_api.DTO;
 using meeplematch_api.Model;
 using meeplematch_api.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace meeplematch_api.Service;
 
@@ -18,7 +19,7 @@ public class EventCommentRepository : IEventCommentRepository
 
     public IEnumerable<EventCommentDTO> GetEventComments(int eventId)
     {
-        var result = _context.EventComments.FirstOrDefault(ec => ec.EventId == eventId);
+        var result = _context.EventComments.Where(ec => ec.EventId == eventId).Include(ec => ec.User).ToList();
         return _mapper.Map<IEnumerable<EventCommentDTO>>(result);
     }
 

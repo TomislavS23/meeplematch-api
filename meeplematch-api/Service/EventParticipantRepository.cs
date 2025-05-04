@@ -18,7 +18,7 @@ public class EventParticipantRepository : IEventParticipantRepository
 
     public IEnumerable<EventParticipantDTO> FindEventParticipantsByEventId(int eventId)
     {
-        var result = _context.EventParticipants.FirstOrDefault(ep => ep.IdEvent == eventId);
+        var result = _context.EventParticipants.Where(ep => ep.IdEvent == eventId).ToList();
         
         return _mapper.Map<IEnumerable<EventParticipantDTO>>(result);
     }

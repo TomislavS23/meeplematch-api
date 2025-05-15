@@ -1,5 +1,6 @@
 using meeplematch_api.DTO;
 using meeplematch_api.Repository;
+using meeplematch_api.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace meeplematch_api.Controller;
@@ -34,6 +35,19 @@ public class EventController : ControllerBase
         try
         {
             return Ok(_repository.FindById(id));
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }    
+    
+    [HttpGet("created_by/{userId:int}")]
+    public IActionResult FindByUserId(int userId)
+    {
+        try
+        {
+            return Ok(_repository.FindEventByUserId(userId));
         }
         catch (Exception e)
         {

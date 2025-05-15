@@ -32,7 +32,7 @@ public class UserRepository : IUserRepository
 
         entity.Username = user.Username ?? entity.Username;
         entity.Email = user.Email ?? entity.Email;
-        entity.RoleId = (int)(user.RoleId != 0 ? user.RoleId : entity.RoleId);
+        entity.RoleId = user.RoleId ?? entity.RoleId;
         entity.FirstName = user.FirstName ?? entity.FirstName;
         entity.LastName = user.LastName ?? entity.LastName;
         entity.ImagePath = user.ImagePath ?? entity.ImagePath;

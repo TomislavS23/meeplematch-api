@@ -21,8 +21,14 @@ public class EventParticipantRepository : IEventParticipantRepository
         var result = _context.EventParticipants.Where(ep => ep.IdEvent == eventId).ToList();
         
         return _mapper.Map<IEnumerable<EventParticipantDTO>>(result);
-    }
-
+    }      
+    
+    public IEnumerable<EventParticipantDTO> FindEventParticipantsByUserId(int userId)
+    {
+        var result = _context.EventParticipants.Where(ep => ep.IdUser == userId).ToList();
+        
+        return _mapper.Map<IEnumerable<EventParticipantDTO>>(result);
+    }    
     public void InsertEventParticipant(EventParticipantDTO participant)
     {
         _context.EventParticipants.Add(_mapper.Map<EventParticipant>(participant));

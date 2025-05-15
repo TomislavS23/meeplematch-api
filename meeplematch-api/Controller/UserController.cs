@@ -99,6 +99,34 @@ public class UserController : Microsoft.AspNetCore.Mvc.Controller
         }
     }
 
+    [HttpPut("me"), Authorize]
+    public IActionResult UpdateSelf([FromBody] CreateUserDTO userDto)
+    {
+        try
+        {
+            var username = User.Identity?.Name;
+            if (string.IsNullOrEmpty(username))
+            {
+                return Unauthorized("No such user exists.");
+            }
+
+            var user = _userRepository.GetUsers().FirstOrDefault(u => u.Username == username);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            _userRepository.UpdateUser(userDto, user.IdUser);
+
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+
+
     [HttpDelete("{id:int}"), Authorize(Roles = "admin")]
     public IActionResult DeleteUser(int id)
     {
@@ -127,4 +155,40 @@ public class UserController : Microsoft.AspNetCore.Mvc.Controller
         }
     }
 
+    //
+    [HttpPut("forget/{id:int}"), Authorize]
+    public IActionResult AnonymizeUser(int id)
+    {
+        try
+        {
+            var user = _userRepository.GetUser(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var timestamp = DateTime.UtcNow.ToString("yyyyMMddHHmmss");
+
+            user.FirstName = "Deleted";
+            user.LastName = "User";
+            user.Username = $"deleted_user_{user.IdUser}_{timestamp}";
+            user.Email = $"deleted_{user.IdUser}_{timestamp}@example.com";
+            user.ImagePath = "/assets/images/neutral_profile.png";
+            user.IsMale = true;
+            user.HashedPassword = Guid.NewGuid().ToByteArray(); 
+            user.Salt = Guid.NewGuid().ToByteArray();
+            user.IsBanned = true;
+            user.UpdatedAt = DateTime.UtcNow;
+
+            CreateUserDTO dto = _mapper.Map<CreateUserDTO>(user);
+
+            _userRepository.UpdateUser(_mapper.Map<CreateUserDTO>(user), user.IdUser);
+
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, ex.Message);
+        }
+    }
 }

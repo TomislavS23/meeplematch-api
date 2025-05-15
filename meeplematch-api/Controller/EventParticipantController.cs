@@ -29,6 +29,19 @@ public class EventParticipantController : ControllerBase
         }
     }
 
+    [HttpGet("get_by_user/{userId:int}")]
+    public IActionResult FindParticipantsByUserId(int userId)
+    {
+        try
+        {
+            return Ok(_eventParticipantRepository.FindEventParticipantsByUserId(userId));
+        }
+        catch (Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
+    }
+
     [HttpPost]
     public IActionResult InsertEventParticipant(EventParticipantDTO participant)
     {

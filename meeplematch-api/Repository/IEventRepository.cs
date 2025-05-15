@@ -7,6 +7,7 @@ public interface IEventRepository
 {
     IEnumerable<EventDTO> FindAll();
     EventDTO FindById(int id);
+    IEnumerable<EventDTO> FindEventByUserId(int userId);
     void Save(EventDTO e);
     void Update(EventDTO e, int id);
     void Delete(int id);

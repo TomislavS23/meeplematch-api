@@ -26,6 +26,12 @@ public class EventRepository : IEventRepository
         var entity = _context.Events.FirstOrDefault(e => e.IdEvent == id);
         return _mapper.Map<EventDTO>(entity);
     }
+    public IEnumerable<EventDTO> FindEventByUserId(int userId)
+    {
+        var result = _context.Events.Where(e => e.CreatedBy == userId).ToList();
+
+        return _mapper.Map<IEnumerable<EventDTO>>(result);
+    }
 
     public void Save(EventDTO e)
     {
